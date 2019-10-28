@@ -9,6 +9,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zfy.cms.dao.ArticleMapper;
 import com.zfy.cms.entity.Article;
+import com.zfy.cms.entity.Comment;
 import com.zfy.cms.entity.Tag;
 import com.zfy.cms.service.ArticleService;
 @Service
@@ -74,6 +75,9 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 	//处理tags标签的方法
 	private void processTags(Article artilce){
+		if(artilce.getTags()==null){
+			return;
+		}
 		 //添加文章中的标签 使用字符串分割
 		 String[] tags = artilce.getTags().split(",");
 		 for (String tag : tags) {
@@ -129,6 +133,22 @@ public class ArticleServiceImpl implements ArticleService {
 	public int updateHot(Integer articleId, int status) {
 		// TODO Auto-generated method stub
 		return mapper.updateHot(articleId,status);
+	}
+	//根据文章id和用户id进行发布评论
+	@Override
+	public void comment(Integer userId, int articleId, String content) {
+		// TODO Auto-generated method stub
+		Comment comment = new Comment(articleId,userId,content);
+		mapper.addComment(comment);
+		mapper.increaseCommentCnt(articleId);
+		
+	}
+	//获取评论
+	@Override
+	public PageInfo<Comment> getCommentByArticleId(Integer articleId,
+			Integer page) {
+		PageHelper.startPage(page, 5);
+		return new PageInfo<Comment>(mapper.getCommentByArticleId(articleId));
 	}
 
 }

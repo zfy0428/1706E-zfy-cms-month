@@ -8,6 +8,12 @@
 		<result column="channel_id" property="channelId" />
 		<result column="category_id" property="categoryId" />
 		<result column="user_id" property="userId" />
+		<result column="articleType" property="articleType"
+			typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" 
+			jdbcType="INTEGER" javaType="com.zfy.cms.comon.ArticleType"
+		/>
+		
+		
 		<association property="user" column="user_id"
 			select="com.zfy.cms.dao.UserMapper.findUserById" />
 		<association property="channel" column="channel_id"
@@ -15,6 +21,8 @@
 		<association property="cat" column="category_id"
 			select="com.zfy.cms.dao.CatMapper.findById" />
 		<association property="tags" column="id" select="findTagsByArticleId" />
+		
+		
 	</resultMap>
 	<!--查询标签 -->
 	<select id="findTagsByArticleId" resultType="java.lang.String">
@@ -28,7 +36,7 @@
 	<!-- 根据文章的分类和频道获取文章 -->
 	<select id="list" resultMap="articleMapper">
 		SELECT id,title,picture,channel_id,category_id,user_id,
-		hits,hot,status,created,updated,commentCnt
+		hits,hot,status,created,updated,commentCnt,articleType
 		FROM cms_article
 		WHERE
 		channel_id=#{chnId}
@@ -41,7 +49,7 @@
 	<!--获取热门文章 -->
 	<select id="listHot" resultMap="articleMapper">
 		SELECT id,title,picture,channel_id,category_id,user_id,
-		hits,hot,status,created,updated,commentCnt
+		hits,hot,status,created,updated,commentCnt,articleType
 		FROM cms_article
 		<!-- hot 字段设置文章是否热门 -->
 		WHERE hot>0 AND status=1 AND deleted=0
@@ -51,7 +59,7 @@
 	<select id="lastList" resultMap="articleMapper">
 		SELECT
 		id,title,picture,channel_id,category_id,user_id,
-		hits,hot,status,created,updated,commentCnt
+		hits,hot,status,created,updated,commentCnt,articleType
 		FROM cms_article
 		WHERE
 		status=1 AND deleted=0
@@ -62,7 +70,7 @@
 	<select id="findById" resultMap="articleMapper">
 		SELECT
 		id,title,picture,content,channel_id,category_id,user_id,
-		hits,hot,status,created,updated,commentCnt
+		hits,hot,status,created,updated,commentCnt,articleType
 		FROM cms_article
 		WHERE
 		id=#{value}
@@ -95,8 +103,8 @@
 	<insert id="add" useGeneratedKeys="true" keyColumn="id"
 		keyProperty="id">
 		INSERT INTO
-		cms_article(title,content,picture,channel_id,category_id,user_id,hits,hot,status,deleted,created,updated,commentCnt)
-		values(#{title},#{content},#{picture},#{channelId},#{categoryId},#{userId},0,0,0,0,now(),now(),0)
+		cms_article(title,content,picture,channel_id,category_id,user_id,hits,hot,status,deleted,created,updated,commentCnt,articleType)
+		values(#{title},#{content},#{picture},#{channelId},#{categoryId},#{userId},0,0,0,0,now(),now(),0,#{	articleType,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler, jdbcType=INTEGER, javaType=com.zfy.cms.comon.ArticleType})
 	</insert>
 	<!-- -->
 	<insert id="addTag" useGeneratedKeys="true" keyColumn="id"

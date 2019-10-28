@@ -247,9 +247,12 @@
 			<version>2.8.5</version>
 		</dependency>
 		<dependency>
-			<groupId>com.zfy</groupId>
+			<!-- <groupId>com.zfy</groupId>
 			<artifactId>zhangfuyu-cms-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1-SNAPSHOT</version> -->
+			  <groupId>com.zfy</groupId>
+  <artifactId>zhangfuyu-cms-common</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
   

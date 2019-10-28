@@ -1,5 +1,12 @@
 package com.zfy.cms.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +19,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zfy.cms.comon.ConstClass;
 import com.zfy.cms.entity.Article;
+import com.zfy.cms.entity.Comment;
+import com.zfy.cms.entity.Special;
 import com.zfy.cms.entity.User;
 import com.zfy.cms.service.ArticleService;
 import com.zfy.cms.service.UserService;
-import com.zfy.cms.web.PageUtils;
+import com.zfy.cms.utils.PageUtils;
 
 
 @Controller()
@@ -31,13 +42,40 @@ public class UserController {
 
 	@Autowired
 	ArticleService articleService;
+	
+	
 
 	@GetMapping("register")	//接受get的请求 
 	//	@RequestMapping(value="register",method=RequestMethod.GET)
 	public String register(){
 		return "user/register";
 	}
-
+	
+	
+	/**
+	 * 跳转到我的评论
+	 * @param request
+	 * @return
+	 */
+	@GetMapping("myComment")
+	public String myComment(HttpServletRequest request,@RequestParam(defaultValue="1")Integer page){
+	
+//		获取User
+		User user = (User)request.getSession().getAttribute(ConstClass.SESSION_USER_KEY);
+		Integer id = user.getId();
+		
+		PageHelper.startPage(page, 5);
+//		根据User查询
+		List<Comment> myComments = ser.queryMyComment(id);
+		
+		PageInfo<Comment> pageInfo = new PageInfo<Comment>(myComments);
+		String pageStr = PageUtils.pageLoad(pageInfo.getPageNum(), pageInfo.getPages(), "/user/myComment", 5);
+		request.setAttribute("myComments", myComments);
+		request.setAttribute("page", pageStr);
+		return "my/myComment";
+		
+		
+	}
 	//是拦截
 	@RequestMapping("index")
 	public String index(){
@@ -93,13 +131,18 @@ public class UserController {
 		if(loginUser==null){
 			request.setAttribute("errorMsg", "用户名或密码错误");
 			return "user/login";
+		}else if(loginUser.getLocked()==1){
+			request.setAttribute("errorMsg", "賬戶已經被禁用");
+			return "user/login";
 		}else{
-			request.getSession().setAttribute(ConstClass.SESSION_USER_KEY, loginUser);
 			if(loginUser.getRole()==ConstClass.USER_ROLE_GENRAL){
+				request.getSession().setAttribute(ConstClass.SESSION_USER_KEY, loginUser);
 				System.out.println("home");
 				return "redirect:home";
 				//				return "index/index";
 			}else if(loginUser.getRole()==ConstClass.USER_ROLE_ADMIN){
+				
+				request.getSession().setAttribute(ConstClass.SESSION_ADMIN_KEY, loginUser);
 				System.out.println("index");
 				return "redirect:../admin/index";
 			}else{
@@ -110,6 +153,14 @@ public class UserController {
 
 		}
 	}
+//	 //进入用户管理
+//	@RequestMapping("list")
+//	public String getlist(HttpServletRequest request) {
+//		//查询用户 进入用户列表
+//		List<User> list = ser.list();
+//		request.setAttribute("list", list);
+//		return "admin/article/userlist";
+//	}
 	//进入个人中心(普通注册用户) 
 	@RequestMapping("home")
 	public String home(HttpServletRequest request){
@@ -135,8 +186,56 @@ public class UserController {
 	public boolean delArtucle(Integer id){
 
 		return articleService.remove(id)>0;
+	}
+	 // 跳转到上传页面
+	@GetMapping("toAddhead_picture")
+	public String toAddhead_picture() {
+		return "my/addhead_picture";
+	}
+	//上传头像
+	@PostMapping("addhead_picture")
+	public String addHead_picture(HttpServletRequest request,MultipartFile file) throws IllegalStateException, IOException {
+		User user = (User)request.getSession().getAttribute("SESSION_USER_KEY");
+		procesFile(file,user);
+
+		ser.addHead_picture(user);
+		return "redirect:home";
 
 	}
+	/**
+	 * 处理接收到的文件
+	 */
+	
+	private void procesFile(MultipartFile file,User user) throws IllegalStateException, IOException {
 
+		// 原来的文件名称
+		
+		if(file.isEmpty()||"".equals(file.getOriginalFilename()) || file.getOriginalFilename().lastIndexOf('.')<0 ) {
+			user.setHead_picture("");
+			return;
+		}
+		//原文件的名称
+		String originName = file.getOriginalFilename();
+		// 原文件的扩张名 找到.的位置
+		String suffixName = originName.substring(originName.lastIndexOf('.'));
+		//根据日期分成不同的级别
+		SimpleDateFormat sdf=  new SimpleDateFormat("yyyyMMdd");
+		//得到一个新的路径
+		String path = "d:/pic/" + sdf.format(new Date());
+		File pathFile = new File(path);
+		//判断路径是否存在
+		if(!pathFile.exists()){
+			//如果文件不存在 创建一个新的路径
+			pathFile.mkdir();
+		}
+		//定义destFileName  UUID去生成文件名  + 原文件的扩张名 
+		String destFileName = path + "/" +  UUID.randomUUID().toString() + suffixName;
+		//把原文件保存到新文件的地址   destFileName文件存储的绝对路径
+		File distFile = new File( destFileName);
+		file.transferTo(distFile);//文件另存到这个目录下边
+		//将图片位置存下来 使用字符分割得到图片的地址
+		user.setHead_picture(destFileName.substring(7));
+		
+	}
 
 }

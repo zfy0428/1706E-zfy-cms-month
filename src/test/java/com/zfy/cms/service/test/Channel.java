@@ -29,5 +29,6 @@ public class Channel extends BaseTest{
 			System.out.println("cat id" + listByChnId);
 		});
 	}
+	
 
 }

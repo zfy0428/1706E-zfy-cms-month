@@ -54,6 +54,16 @@ String htmlData = request.getParameter("content1") != null ? request.getParamete
 			<label for="title">文章标题图片</label> <input type="file"
 				class="form-control" id="file" name="file">
 		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		<div class="form-group row ">
 		  	<label for="channel">文章栏目</label> 
 			<select class="custom-select custom-select-sm mb-3" id="channel"  name="channelId">
@@ -65,6 +75,7 @@ String htmlData = request.getParameter("content1") != null ? request.getParamete
 			<label for="category">文章分类</label> 
 			<select class="custom-select custom-select-sm mb-3" id="category" name="categoryId">
 			</select>
+	
 			<label for="category">文章标签</label> 
 				<input name="tags" size="50"/>
 		</div>

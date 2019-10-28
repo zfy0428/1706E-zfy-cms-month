@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.zfy.cms.entity.Article;
+import com.zfy.cms.entity.Comment;
 
 public interface ArticleService {
 	//根据文章的分类和频道获取文章 
@@ -34,5 +35,9 @@ public interface ArticleService {
 	int updateStatus(Integer articleId, int status);
 	//修改热门
 	int updateHot(Integer articleId, int status);
+	//根据文章id和用户id进行发布评论
+	void comment(Integer id, int articleId, String content);
+	//获取评论
+	PageInfo<Comment> getCommentByArticleId(Integer articleId,Integer page);
 
 }

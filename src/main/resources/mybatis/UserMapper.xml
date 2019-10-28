@@ -7,4 +7,8 @@
  	<select id="findUserById" resultType="user">
 		 SELECT * FROM cms_user WHERE id = #{value} limit 1
 	</select>  
+	<!--查询用户列表  -->
+	<select id="list" resultType="user">
+ 	select * from cms_user where role=0
+ 	</select>
  </mapper> 

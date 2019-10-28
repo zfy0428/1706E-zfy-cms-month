@@ -27,12 +27,14 @@ public class User {
 	private String url;
 	private int score;
 	private int role;
+	private String head_picture;
 	public User(
 			Integer id,
 			@NotEmpty(message = "用户名不能为空") @Length(min = 4, max = 12, message = "用户名长度不合法") String username,
 			@NotEmpty(message = "密码不能为空") String password, String nickname,
 			Date birthday, int gender, int locked, Date create_time,
-			Date update_time, String url, int score, int role) {
+			Date update_time, String url, int score, int role,
+			String head_picture) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -46,17 +48,8 @@ public class User {
 		this.url = url;
 		this.score = score;
 		this.role = role;
+		this.head_picture = head_picture;
 	}
-	
-	public User(
-			@NotEmpty(message = "用户名不能为空") @Length(min = 4, max = 12, message = "用户名长度不合法") String username,
-			@NotEmpty(message = "密码不能为空") String password, int role) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.role = role;
-	}
-
 	public User() {
 		super();
 	}
@@ -132,6 +125,12 @@ public class User {
 	public void setRole(int role) {
 		this.role = role;
 	}
+	public String getHead_picture() {
+		return head_picture;
+	}
+	public void setHead_picture(String head_picture) {
+		this.head_picture = head_picture;
+	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password="
@@ -139,7 +138,7 @@ public class User {
 				+ birthday + ", gender=" + gender + ", locked=" + locked
 				+ ", create_time=" + create_time + ", update_time="
 				+ update_time + ", url=" + url + ", score=" + score + ", role="
-				+ role + "]";
+				+ role + ", head_picture=" + head_picture + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -150,6 +149,8 @@ public class User {
 		result = prime * result
 				+ ((create_time == null) ? 0 : create_time.hashCode());
 		result = prime * result + gender;
+		result = prime * result
+				+ ((head_picture == null) ? 0 : head_picture.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + locked;
 		result = prime * result
@@ -185,6 +186,11 @@ public class User {
 		} else if (!create_time.equals(other.create_time))
 			return false;
 		if (gender != other.gender)
+			return false;
+		if (head_picture == null) {
+			if (other.head_picture != null)
+				return false;
+		} else if (!head_picture.equals(other.head_picture))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -224,7 +230,7 @@ public class User {
 			return false;
 		return true;
 	}
-	
+
 	
 	
 }

@@ -1,11 +1,15 @@
 package com.zfy.cms.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Utils.Md5Utils;
 
 import com.zfy.cms.dao.UserMapper;
+import com.zfy.cms.entity.Article;
+import com.zfy.cms.entity.Comment;
 import com.zfy.cms.entity.User;
 import com.zfy.cms.service.UserService;
 @Service
@@ -44,6 +48,27 @@ public class UserServiceImpl implements UserService{
 			return loginUser;
 		}
 		return null;
+	}
+	//添加头像
+	@Override
+	public int addHead_picture(User user) {
+		return mapper.addHead_picture(user);
+	}
+	//进入管理用户
+	@Override
+	public List<User> list() {
+		// TODO Auto-generated method stub
+		return mapper.list();
+	}
+	//修改用户的状态
+	@Override
+	public int update(Article article) {
+		return mapper.update(article);
+	}
+	@Override
+	public List<Comment> queryMyComment(Integer id) {
+		// TODO Auto-generated method stub
+		return  mapper.queryMyComment(id);
 	}
 
 	

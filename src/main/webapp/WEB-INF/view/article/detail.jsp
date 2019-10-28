@@ -16,11 +16,12 @@
 </head>
 <body>  
 <div class="container">
-		
+	<div id="title">
+
 		<dl>
 		   <dt><a href="javascript:window.close()">关闭窗口</a></dt>
 			<dt>${article.title }</dt>
-				<hr>
+				<hr />
 			
 			<dd>${article.content }</dd>
 			<dd>文章标签:${article.tags }</dd>
@@ -35,9 +36,14 @@
 				<hr>
 				评论数量：${article.commentCnt }
 			</dd>
-			<dd><div id="commentList"></div></dd>
+			
+			<dd>
+				<div id="commentList">
+				</div>
+			</dd>
 			
 		</dl>
+	</div>
 	
 
 </div>
@@ -51,7 +57,6 @@
 	}); */
 	
 	function commnent(){
-		
 		var retext=$("[name='content']").val();
 		//alert(retext)
 		var id=${article.id}
@@ -60,15 +65,14 @@
 		$.ajax({ 
 			type:"post",
 			data:{content:retext,articleId:id},
-			url:"/commnent/post",
+			url:"/article/comment",
 			success:function(msg){
-				if(msg=="success"){ 
+				if(msg.result==1){ 
 					alert("发表成功") 
-					$("#commentList").load("/commnent/getlist?articleId=${article.id}" );
-					history.go(0)
+					$("#title").load("/article/show?id=${article.id}" );
 					//location.href="getDetail" 
 				}else{
-					alert(msg)
+					alert(msg.errMsg);
 				}
 			}
 		})
@@ -76,6 +80,7 @@
 			alert("请输入评论内容")
 		}
 	}
+	$("#commentList").load("/article/getclist?articleId=${article.id}");
 </script>
 
 

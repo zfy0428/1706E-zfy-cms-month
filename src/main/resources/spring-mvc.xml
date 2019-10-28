@@ -23,10 +23,12 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<!-- 配置拦截的资源 -->
-			<mvc:mapping path="/**"/>
+			<mvc:mapping path="/admin/**"/>
 			<!-- 配置排除的拦截资源 -->
 			<mvc:exclude-mapping path="/resource/**"/>
 			<mvc:exclude-mapping path="/article/show"/>
+			<mvc:exclude-mapping path="/article/article"/>
+			<mvc:exclude-mapping path="/article/getclist"/>
 			<mvc:exclude-mapping path="/pic/**"/>
 			<mvc:exclude-mapping path="/"/>
 			<mvc:exclude-mapping path="/index"/>
@@ -34,7 +36,24 @@
 			<mvc:exclude-mapping path="/user/register"/>
 			<mvc:exclude-mapping path="/user/checkExist"/>
 			<!-- 拦截器的实现类 -->
-			<bean class="com.zfy.cms.web.AuthIntercepter"></bean>
+			<bean class="com.zfy.cms.web.AdminIntercepter"></bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<!-- 配置拦截的资源 -->
+			<mvc:mapping path="/user/**"/>
+			<!-- 配置排除的拦截资源 -->
+			<mvc:exclude-mapping path="/resource/**"/>
+			<mvc:exclude-mapping path="/article/show"/>
+			<mvc:exclude-mapping path="/article/article"/>
+			<mvc:exclude-mapping path="/article/getclist"/>
+			<mvc:exclude-mapping path="/pic/**"/>
+			<mvc:exclude-mapping path="/"/>
+			<mvc:exclude-mapping path="/index"/>
+			<mvc:exclude-mapping path="/user/login"/>
+			<mvc:exclude-mapping path="/user/register"/>
+			<mvc:exclude-mapping path="/user/checkExist"/>
+			<!-- 拦截器的实现类 -->
+			<bean class="com.zfy.cms.web.UserIntercepter"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
 	
