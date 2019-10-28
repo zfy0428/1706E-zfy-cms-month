@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="com.zfy.cms.dao.UserMapper">
+ <mapper namespace="com.zhangfuyu.cms.dao.UserMapper">
 <!--根据UserId查询用户-->
  	<select id="findUserById" resultType="user">
 		 SELECT * FROM cms_user WHERE id = #{value} limit 1

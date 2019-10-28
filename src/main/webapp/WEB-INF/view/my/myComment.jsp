@@ -5,11 +5,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-<h1>	我的評論	</h1>
+<h1>	我的評論1111	</h1>
 
 <c:forEach items="${myComments }" var="comments">
 		<div class="media-body">
@@ -29,6 +30,16 @@
 		<hr>
 	</c:forEach>
 	<div>${page }</div>
+	<script type="text/javascript" >
+	
+	 $('.page-link').click(function (e) {
+     	  //获取点击的的url
+         var url = $(this).attr('data');
+       	//  alert(url)
+        //在中间区域显示地址的内容
+        $('#center').load(url);
+     });
+	</script>
 </body>
 	
 </html>

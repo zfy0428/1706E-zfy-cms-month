@@ -7,9 +7,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <!-- 别名配置 -->
  <typeAliases>
     <!-- todo -->
-   <package name="com.zfy.cms.entity"/>
+   <package name="com.zhangfuyu.cms.entity"/>
    <!-- todo -->
-   <package name="com.zfy.cms.vo"/>
+   <package name="com.zhangfuyu.cms.vo"/>
  </typeAliases>
  
  

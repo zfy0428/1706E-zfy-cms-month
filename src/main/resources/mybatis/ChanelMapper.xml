@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zfy.cms.dao.ChannelMapper">
+<mapper namespace="com.zhangfuyu.cms.dao.ChannelMapper">
 <!--查询频道  -->
 	<select id="findById" resultType="channel">
 		 SELECT * FROM cms_channel WHERE id = #{value} limit 1

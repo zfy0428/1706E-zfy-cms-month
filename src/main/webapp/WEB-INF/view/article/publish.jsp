@@ -54,17 +54,7 @@ String htmlData = request.getParameter("content1") != null ? request.getParamete
 			<label for="title">文章标题图片</label> <input type="file"
 				class="form-control" id="file" name="file">
 		</div>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		<div class="form-group row ">
+	<div class="form-group row ">
 		  	<label for="channel">文章栏目</label> 
 			<select class="custom-select custom-select-sm mb-3" id="channel"  name="channelId">
 			  <option value="0">请选择</option>

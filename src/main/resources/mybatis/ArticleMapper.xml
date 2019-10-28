@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zfy.cms.dao.ArticleMapper">
+<mapper namespace="com.zhangfuyu.cms.dao.ArticleMapper">
 	<resultMap type="article" id="articleMapper">
 		<id column="id" property="id" />
 		<result column="channel_id" property="channelId" />
@@ -10,16 +10,16 @@
 		<result column="user_id" property="userId" />
 		<result column="articleType" property="articleType"
 			typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" 
-			jdbcType="INTEGER" javaType="com.zfy.cms.comon.ArticleType"
+			jdbcType="INTEGER" javaType="com.zhangfuyu.cms.comon.ArticleType"
 		/>
 		
 		
 		<association property="user" column="user_id"
-			select="com.zfy.cms.dao.UserMapper.findUserById" />
+			select="com.zhangfuyu.cms.dao.UserMapper.findUserById" />
 		<association property="channel" column="channel_id"
-			select="com.zfy.cms.dao.ChannelMapper.findById" />
+			select="com.zhangfuyu.cms.dao.ChannelMapper.findById" />
 		<association property="cat" column="category_id"
-			select="com.zfy.cms.dao.CatMapper.findById" />
+			select="com.zhangfuyu.cms.dao.CatMapper.findById" />
 		<association property="tags" column="id" select="findTagsByArticleId" />
 		
 		
@@ -27,8 +27,8 @@
 	<!--查询标签 -->
 	<select id="findTagsByArticleId" resultType="java.lang.String">
 		SELECT
-		GROUP_CONCAT(tagname) tags
-		FROM cms_article_tag_middle m JOIN cms_tag t on m.tid=t.id
+		GROUP_CONCAT(display_name) term
+		FROM cms_article_term_middle m JOIN cms_term t on m.tid=t.id
 		WHERE m.aid= #{value}
 		GROUP BY m.aid
 	</select>
@@ -104,11 +104,11 @@
 		keyProperty="id">
 		INSERT INTO
 		cms_article(title,content,picture,channel_id,category_id,user_id,hits,hot,status,deleted,created,updated,commentCnt,articleType)
-		values(#{title},#{content},#{picture},#{channelId},#{categoryId},#{userId},0,0,0,0,now(),now(),0,#{	articleType,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler, jdbcType=INTEGER, javaType=com.zfy.cms.comon.ArticleType})
+		values(#{title},#{content},#{picture},#{channelId},#{categoryId},#{userId},0,0,0,0,now(),now(),0,#{	articleType,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler, jdbcType=INTEGER, javaType=com.zhangfuyu.cms.comon.ArticleType})
 	</insert>
 	<!-- -->
 	<insert id="addTag" useGeneratedKeys="true" keyColumn="id"
 		keyProperty="id">
-		INSERT INTO cms_tag(tagname) values(#{tagname})
+		INSERT INTO cms_term(display_name,unique_name) values(#{display_name},#{unique_name})
 	</insert>
 </mapper>

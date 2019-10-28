@@ -4,6 +4,7 @@ $(function(){
       $('.page-link').click(function (e) {
       	  //获取点击的的url
           var url = $(this).attr('data');
+        //  alert(url)
          //在中间区域显示地址的内容
          $('#content-wrapper').load(url);
       });

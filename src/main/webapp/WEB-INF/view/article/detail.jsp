@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+e<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -81,6 +81,10 @@
 		}
 	}
 	$("#commentList").load("/article/getclist?articleId=${article.id}");
+	//增加点击次数
+	$.post("/article/addHits",{id:${article.id}},function(data){
+		
+	},"json");
 </script>
 
 

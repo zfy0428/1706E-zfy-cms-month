@@ -1,12 +1,12 @@
-package com.zfy.cms.web;
+package com.zhangfuyu.cms.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.zfy.cms.comon.ConstClass;
-import com.zfy.cms.entity.User;
+import com.zhangfuyu.cms.comon.ConstClass;
+import com.zhangfuyu.cms.entity.User;
 
 /**
  * 
