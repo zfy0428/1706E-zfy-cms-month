@@ -16,7 +16,7 @@ public interface UserMapper {
 			+ "values(#{username},#{password},#{gender},now())")
 	int register(User user);
 	//根据用户名称查询用户是否存在
-	@Select("select id,username,password,role,locked from cms_user where username=#{value}")
+	@Select("select id,username,password,role,locked,head_picture from cms_user where username=#{value}")
 	User findByName(String username);
 	//上传头像
 	@Update("update cms_user set head_picture=#{head_picture} where id=#{id}")
