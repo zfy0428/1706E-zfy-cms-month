@@ -25,7 +25,7 @@
    	 </li>
    	 <li class="nav-item">
    		<div class="dropdown" style="padding-top: 0.4rem;">
-		  <a href="#" class="nav-link dropdown-toggle" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		  <a href="#" class=" dropdown-toggle" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		    <c:out value="${sessionScope.SESSION_USER_KEY.username}" default="CMS-User"/>
 		  </a>
 		  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">

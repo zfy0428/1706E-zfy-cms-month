@@ -3,6 +3,8 @@ package com.zhangfuyu.cms.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.jsp.tagext.TagAdapter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -171,6 +173,11 @@ public class ArticleServiceImpl implements ArticleService {
 	public int addHits(Integer id) {
 		// TODO Auto-generated method stub
 		return mapper.increaseHits(id);
+	}
+	@Override
+	public int addTag(String tag) {
+		Term tagBean = new Term(tag);
+		return mapper.addTag(tagBean);
 	}
 
 }

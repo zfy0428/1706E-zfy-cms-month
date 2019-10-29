@@ -166,6 +166,15 @@ public class User {
 				+ ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
+	
+	public User(
+			@NotEmpty(message = "用户名不能为空") @Length(min = 4, max = 12, message = "用户名长度不合法") String username,
+			@NotEmpty(message = "密码不能为空") String password, int role) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.role = role;
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

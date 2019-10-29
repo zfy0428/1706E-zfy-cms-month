@@ -85,6 +85,8 @@
 		WHERE
 		user_id=#{value}
 		AND deleted=0
+		
+		ORDER BY `id` DESC 
 	</select>
 	<!-- //获取需要管理的文章 -->
 	<select id="listAdmin" resultMap="articleMapper">

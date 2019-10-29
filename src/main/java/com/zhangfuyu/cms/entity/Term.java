@@ -13,6 +13,10 @@ public class Term implements Serializable{
 	String unique_name;
 	
 	
+	public Term(String display_name) {
+		super();
+		this.display_name = display_name;
+	}
 	public Term(String display_name, String unique_name) {
 		super();
 		this.display_name = display_name;

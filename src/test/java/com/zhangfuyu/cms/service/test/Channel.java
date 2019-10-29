@@ -16,12 +16,14 @@ public class Channel extends BaseTest{
 	@Autowired
 	CatService catSer;
 	@Test
+	
 	public void testChannel(){
 		List<com.zhangfuyu.cms.entity.Channel> allChls = channelSer.getAllChnls();
 		allChls.forEach(x->{
 			System.out.println("x is" + x);
 		});
 	}
+	
 	@Test
 	public void testCat(){
 		List<Cat> listByChnId = catSer.getListByChnlId(1);

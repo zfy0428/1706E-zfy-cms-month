@@ -46,5 +46,7 @@ public interface ArticleService {
 	void comment(Integer id, Integer articleId, String content, Date date);
 //	增加文章点击次数
 	int addHits(Integer id);
+	
+	int addTag(String tag);
 
 }

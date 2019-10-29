@@ -1,7 +1,6 @@
 package com.zhangfuyu.cms.service.test;
 
 
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,6 +16,10 @@ public class TestTranscation extends BaseTest {
 	
 	@Autowired
 	ArticleService articleService;
+
+	/**
+	 * 
+	 */
 	@Test
 	public void testAddArticle() {
 		Article article = new Article();

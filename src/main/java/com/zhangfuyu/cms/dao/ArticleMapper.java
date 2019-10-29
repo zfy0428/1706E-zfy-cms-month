@@ -61,7 +61,7 @@ public interface ArticleMapper {
 	Term findTagByName(String tag);
 
 	// 添加tag实体标签
-	void addTag(Term tagBean);
+	int addTag(Term tagBean);
 
 	// 添加数据到文章标签的中间表
 	@Insert("INSERT INTO cms_article_term_middle values(#{articleId},#{tagId}) ")
